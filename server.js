@@ -6,7 +6,8 @@ const sqlite3 = require("sqlite3").verbose();
 const nodemailer = require("nodemailer");
 const axios = require("axios");
 const xml2js = require("xml2js");
-require("dotenv").config(); // Load environment variables
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const app = express();
 const server = http.createServer(app);
