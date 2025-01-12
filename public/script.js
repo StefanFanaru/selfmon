@@ -14,7 +14,7 @@ $(document).ready(async function () {
       const server = agentData?.server?.[0];
       const service = agentData?.service?.[0];
 
-      if (!agentData || agent.name === "rpone") {
+      if (!agentData) {
         fragment.appendChild(
           buildAgentDiv(hostName, "N/A", "N/A", "N/A", false)[0],
         );
