@@ -1,0 +1,95 @@
+body {
+  font-family: "Roboto", sans-serif; /* Using a more modern font */
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  background-color: #121212; /* Dark background for a modern look */
+  color: #ffffff; /* Light text color */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2.5rem;
+  color: #ffffff;
+}
+
+.agent-status {
+  background: #1e1e1e; /* Darker card background */
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.agent-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.agent-info > span {
+  width: 20%;
+  display: flex;
+  align-items: center;
+}
+
+.agent-name {
+  font-weight: bold;
+}
+
+.metric-name {
+  opacity: 0.6;
+}
+
+.status-circle {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.details-button {
+  background-color: #6200ea; /* Material purple */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.details-button:hover {
+  background-color: #3700b3; /* Darker purple on hover */
+}
+
+.details-button.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.details-button.disabled:hover {
+  background-color: #ccc;
+}
+
+.charts {
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .agent-info {
+    flex-direction: column; /* Stack items on smaller screens */
+    align-items: flex-start;
+  }
+
+  .agent-info > span {
+    width: 100%; /* Full width on mobile */
+    margin-bottom: 10px; /* Space between items */
+  }
+
+  .details-button {
+    width: 100%; /* Full-width button on mobile */
+  }
+}
