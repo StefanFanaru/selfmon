@@ -51,13 +51,20 @@ const transporter = nodemailer.createTransport({
 });
 
 // Agent configuration
-const agents = JSON.parse(process.env.AGENTS || "[]");
+if (!process.env.AGENTS) {
+  console.error("No agents configured");
+  process.exit(1);
+}
+const agents = JSON.parse(process.env.AGENTS);
 
 // Fetch agent data
 async function fetchAgentData(agent) {
   const url = `http://stefanaru:monit344@${agent.ip}:${agent.port}/_status?format=xml`;
   try {
     const response = await axios.get(url, { timeout: 1000 });
+    if (response.status !== 200) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
     const result = await xml2js.parseStringPromise(response.data);
     const cpuTotal = calculateCpuUsage(result);
     const memoryUsage = parseFloat(
@@ -72,6 +79,7 @@ async function fetchAgentData(agent) {
       error,
     );
     await handleAgentOffline(agent);
+    await saveAgentData(agent.name, "offline", 0, 0);
     return null;
   }
 }
@@ -200,8 +208,20 @@ function sendEmailAlert(agent, type) {
   });
 }
 
+function deleteOldRecords() {
+  db.run(
+    `DELETE FROM agents WHERE time < datetime('now', '-24 Hour')`,
+    (err) => {
+      if (err) {
+        console.error("Error deleting old records", err);
+      }
+    },
+  );
+}
+
 // Background task to fetch agent data every 60 seconds
 setInterval(getAgentData, 60000);
+setInterval(deleteOldRecords, 60 * 60 * 10000);
 
 // Start the server
 server.listen(port, () => {
