@@ -105,7 +105,7 @@ function calculateCpuUsage(result) {
 async function saveAgentData(name, status, cpuUsage, memoryUsage) {
   return new Promise((resolve, reject) => {
     db.run(
-      `INSERT INTO agents (name, status, cpu_usage, memory_usage) VALUES (?, ?, ?, ?)`,
+      `INSERT INTO agents (name, status, cpu_usage, memory_usage, time) VALUES (?, ?, ?, ?, DATETIME('now', 'localtime'))`,
       [name, status, cpuUsage, memoryUsage],
       function (err) {
         if (err) {
