@@ -79,15 +79,15 @@ async function fetchAgentData(agent) {
       error,
     );
 
-    await saveAgentData(agent.name, "offline", 0, 0);
-
     const isAfterHours = new Date().getHours() > 1 && new Date().getHours() < 9;
     const isServiableOrTruenas =
       agent.name === "serviable" || agent.name === "truenas";
     if (isAfterHours && isServiableOrTruenas) {
+      await saveAgentData(agent.name, "offline", 0, 0);
       return null;
     }
     await handleAgentOffline(agent);
+    await saveAgentData(agent.name, "offline", 0, 0);
     return null;
   }
 }
