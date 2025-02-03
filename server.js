@@ -81,7 +81,7 @@ async function fetchAgentData(agent) {
 
     await saveAgentData(agent.name, "offline", 0, 0);
 
-    const isAfterHours = new Date().getHours() > 1 || new Date().getHours() < 9;
+    const isAfterHours = new Date().getHours() > 1 && new Date().getHours() < 9;
     const isServiableOrTruenas =
       agent.name === "serviable" || agent.name === "truenas";
     if (isAfterHours && isServiableOrTruenas) {
